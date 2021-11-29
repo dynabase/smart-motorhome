@@ -1,0 +1,22 @@
+{
+  "exclude": "node_modules/**",
+  "presets": [["@babel/typescript", { "jsxPragma": "h" }]],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "alias": {
+          "react": "preact-compat",
+          "react-dom": "preact-compat"
+        }
+      }
+    ],
+    [
+      "@babel/transform-react-jsx",
+      {
+        "pragma": "h",
+        "pragmaFrag": "Fragment"
+      }
+    ]
+  ]
+}
