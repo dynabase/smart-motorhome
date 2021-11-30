@@ -23,7 +23,7 @@ jobs:
         uses: svenstaro/upload-release-action@v1-release
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: moto-card/dist/**/*
-          file_glob: true
+          file: moto-card/dist/boilerplate-card.js
+          asset_name: boilerplate-card.js
           tag: ${{ github.ref }}
           overwrite: true
