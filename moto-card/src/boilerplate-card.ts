@@ -26,83 +26,15 @@ const animation = () => {
   renderer.render(scene, camera);
 };
 
-const toggleHeadlights = () => {
-  const importedScene = scene.getObjectByName('Scene');
-  const isVisible = importedScene.getObjectByName('leftHeadlight').visible;
-  importedScene.getObjectByName('leftHeadlight').visible = !isVisible;
-  importedScene.getObjectByName('rightHeadlight').visible = !isVisible;
-};
-
-const initHeadlights = () => {
-  const leftHeadlight = new THREE.SpotLight(0xffffff, 4, 0, Math.PI / 2, 1);
-  leftHeadlight.position.set(-2, 0.85, 0.55);
-  leftHeadlight.name = 'leftHeadlight';
-  scene.getObjectByName('Scene').add(leftHeadlight);
-
-  const rightHeadlight = new THREE.SpotLight(0xffffff, 4, 0, Math.PI / 2, 1);
-  rightHeadlight.position.set(-2, 0.85, -0.55);
-  rightHeadlight.name = 'rightHeadlight';
-  scene.getObjectByName('Scene').add(rightHeadlight);
-
-  const leftLight = scene.getObjectByName('Scene').getObjectByName('Group_145');
-  leftLight.cursor = 'pointer';
-
-  const rightLight = scene.getObjectByName('Scene').getObjectByName('Group_163');
-  rightLight.cursor = 'pointer';
-
-  leftLight.on('click', () => {
-    toggleHeadlights();
-  });
-  rightLight.on('click', () => {
-    toggleHeadlights();
-  });
-};
-
-const init = async (parent: HTMLDivElement) => {
-  camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000);
-  scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x000000);
-  scene.castShadow = true;
-  // scene.fog = new THREE.Fog(0xeeeeee, 0, 1000);
-  console.log(scene);
-  const light = new THREE.AmbientLight(0x404040, 4); // soft white light
-  scene.add(light);
-
-  // init camera position
-  camera.position.set(-1.9257630398868062, 1.9149436284603054, -2.9225354315979177);
-  camera.quaternion.set(-0.2586318915729673, 0.053585350956293056, 0.944430863104808, 0.1956744736530223);
-
-  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.outputEncoding = THREE.sRGBEncoding;
-  renderer.physicallyCorrectLights = true;
-
-  // init controls
-  controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true;
-  controls.minPolarAngle = Math.PI / 3;
-  controls.maxPolarAngle = Math.PI / 3;
-  controls.enableZoom = false;
-  controls.enablePan = false;
-
-  // start animation loop
-  renderer.setAnimationLoop(animation);
-  parent.appendChild(renderer.domElement);
-
-  new Interaction(renderer, scene, camera);
-
-  // load model
-  const gltf = await loadGLTFModel(model);
-  scene.add(gltf.scene);
-
-  // headlights
-  initHeadlights();
-
-  (window as any).debug = {
-    camera,
-    scene,
-    renderer,
-    controls,
-  };
+const update = (state: State) => {
+  if (state.headlights === true) {
+    scene.getObjectByName('Scene').getObjectByName('leftHeadlight').visible = true;
+    scene.getObjectByName('Scene').getObjectByName('rightHeadlight').visible = true;
+  }
+  if (state.headlights === false) {
+    scene.getObjectByName('Scene').getObjectByName('leftHeadlight').visible = false;
+    scene.getObjectByName('Scene').getObjectByName('rightHeadlight').visible = false;
+  }
 };
 
 type State = {
@@ -117,6 +49,8 @@ customElements.define(
     public state: State = {
       headlights: false,
     };
+    public _hass?: HomeAssistant = undefined;
+    public initialized = false;
 
     setConfig(config: BoilerplateCardConfig) {
       console.log('config::::::', config);
@@ -130,13 +64,13 @@ customElements.define(
       }
 
       this.config = {
-        name: 'Boilerplate',
+        name: 'Smart Motor Home',
         ...config,
       };
     }
 
     set hass(hass: HomeAssistant) {
-      console.log('hass', hass);
+      this._hass = hass;
 
       // update local state by hass entity
       if (this.config.headlight_entity) {
@@ -157,17 +91,112 @@ customElements.define(
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         this.content = this.querySelector('.card-content')!;
         if (this.content) {
-          init(this.content);
+          this.init(this.content, () => {
+            this.initialized = true;
+          });
         }
       }
+
       // Update the content based on the latest hass object.
       // ...
+      if (this.initialized) {
+        update(this.state);
+      }
     }
 
     // set webgl size on mount
     connectedCallback() {
       renderer.setSize(this.clientWidth, this.clientWidth);
       camera.aspect = this.clientHeight / this.clientWidth;
+    }
+
+    async init(parent: HTMLDivElement, callback: () => void) {
+      camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000);
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x000000);
+      scene.castShadow = true;
+      // scene.fog = new THREE.Fog(0xeeeeee, 0, 1000);
+      console.log(scene);
+      const light = new THREE.AmbientLight(0x404040, 4); // soft white light
+      scene.add(light);
+
+      // init camera position
+      camera.position.set(-1.9257630398868062, 1.9149436284603054, -2.9225354315979177);
+      camera.quaternion.set(-0.2586318915729673, 0.053585350956293056, 0.944430863104808, 0.1956744736530223);
+
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.outputEncoding = THREE.sRGBEncoding;
+      renderer.physicallyCorrectLights = true;
+
+      // init controls
+      controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.minPolarAngle = Math.PI / 3;
+      controls.maxPolarAngle = Math.PI / 3;
+      controls.enableZoom = false;
+      controls.enablePan = false;
+
+      // start animation loop
+      renderer.setAnimationLoop(animation);
+
+      parent.appendChild(renderer.domElement);
+
+      new Interaction(renderer, scene, camera);
+
+      // load model
+      const gltf = await loadGLTFModel(model);
+      scene.add(gltf.scene);
+
+      // headlights
+      this.initHeadlights();
+
+      (window as any).debug = {
+        camera,
+        scene,
+        renderer,
+        controls,
+      };
+
+      callback();
+    }
+
+    initHeadlights() {
+      const leftHeadlight = new THREE.SpotLight(0xffffff, 4, 0, Math.PI / 2, 1);
+      leftHeadlight.position.set(-2, 0.85, 0.55);
+      leftHeadlight.name = 'leftHeadlight';
+      scene.getObjectByName('Scene').add(leftHeadlight);
+
+      const rightHeadlight = new THREE.SpotLight(0xffffff, 4, 0, Math.PI / 2, 1);
+      rightHeadlight.position.set(-2, 0.85, -0.55);
+      rightHeadlight.name = 'rightHeadlight';
+      scene.getObjectByName('Scene').add(rightHeadlight);
+
+      const leftLight = scene.getObjectByName('Scene').getObjectByName('Group_145');
+      leftLight.cursor = 'pointer';
+
+      const rightLight = scene.getObjectByName('Scene').getObjectByName('Group_163');
+      rightLight.cursor = 'pointer';
+
+      leftLight.on('click', this.toggleHeadlights.bind(this));
+      rightLight.on('click', this.toggleHeadlights.bind(this));
+    }
+
+    toggleHeadlights() {
+      const importedScene = scene.getObjectByName('Scene');
+      const oldVisibilityState = importedScene.getObjectByName('leftHeadlight').visible;
+      importedScene.getObjectByName('leftHeadlight').visible = !oldVisibilityState;
+      importedScene.getObjectByName('rightHeadlight').visible = !oldVisibilityState;
+      if (!oldVisibilityState === true) {
+        console.log('setting state', this._hass, this);
+        this._hass?.callService('homeassistant', 'turn_on', {
+          entity_id: this.config.headlight_entity,
+        });
+      } else {
+        console.log('setting state off', this._hass, this);
+        this._hass?.callService('homeassistant', 'turn_off', {
+          entity_id: this.config.headlight_entity,
+        });
+      }
     }
   },
 );
