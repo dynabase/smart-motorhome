@@ -187,12 +187,10 @@ customElements.define(
       importedScene.getObjectByName('leftHeadlight').visible = !oldVisibilityState;
       importedScene.getObjectByName('rightHeadlight').visible = !oldVisibilityState;
       if (!oldVisibilityState === true) {
-        console.log('setting state', this._hass, this);
         this._hass?.callService('homeassistant', 'turn_on', {
           entity_id: this.config.headlight_entity,
         });
       } else {
-        console.log('setting state off', this._hass, this);
         this._hass?.callService('homeassistant', 'turn_off', {
           entity_id: this.config.headlight_entity,
         });
