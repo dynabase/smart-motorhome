@@ -7,6 +7,9 @@ import Interaction from 'three.interaction/src/interaction/Interaction';
 import { loadGLTFModel } from './lib/loadGLTFModel';
 import type { BoilerplateCardConfig } from './types';
 import { localize } from './localize/localize';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+import model from './public/model.glb';
+console.log(model);
 
 // This puts your card into the UI card picker dialog
 (window as any).customCards = (window as any).customCards || [];
@@ -88,7 +91,7 @@ const init = async (parent: HTMLDivElement) => {
   new Interaction(renderer, scene, camera);
 
   // load model
-  const gltf = await loadGLTFModel('http://127.0.0.1:5000/public/model.glb');
+  const gltf = await loadGLTFModel(model);
   scene.add(gltf.scene);
 
   // headlights

@@ -6,7 +6,7 @@ import { terser } from 'rollup-plugin-terser';
 import serve from 'rollup-plugin-serve';
 import json from '@rollup/plugin-json';
 import alias from '@rollup/plugin-alias';
-import copy from 'rollup-plugin-copy-assets';
+import url from '@rollup/plugin-url';
 
 const dev = process.env.ROLLUP_WATCH;
 
@@ -21,9 +21,6 @@ const serveopts = {
 };
 
 const plugins = [
-  copy({
-    assets: ['src/public'],
-  }),
   alias({
     entries: [
       { find: 'react', replacement: 'preact/compat' },
@@ -34,6 +31,10 @@ const plugins = [
   }),
   nodeResolve({}),
   commonjs(),
+  url({
+    include: ['**/*.glb'],
+    limit: 25 * 1024 * 1024,
+  }),
   typescript(),
   json(),
   babel({

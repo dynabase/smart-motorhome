@@ -5,7 +5,7 @@ import serve from 'rollup-plugin-serve';
 import { terser } from 'rollup-plugin-terser';
 import json from '@rollup/plugin-json';
 import alias from '@rollup/plugin-alias';
-import copy from 'rollup-plugin-copy-assets';
+import url from '@rollup/plugin-url';
 
 export default {
   input: ['src/boilerplate-card.ts'],
@@ -14,9 +14,6 @@ export default {
     format: 'es',
   },
   plugins: [
-    copy({
-      assets: ['src/public'],
-    }),
     alias({
       entries: [
         { find: 'react', replacement: 'preact/compat' },
@@ -26,6 +23,10 @@ export default {
       ],
     }),
     resolve(),
+    url({
+      include: ['**/*.glb'],
+      limit: 25 * 1024 * 1024,
+    }),
     typescript(),
     json(),
     babel({
