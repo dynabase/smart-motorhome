@@ -1,0 +1,8 @@
+title: Home
+views:
+  - path: default_view
+    title: Home
+    cards:
+      - type: custom:smart-motor-home
+        entity: sun.sun
+        headlight_entity: light.ceiling_lights

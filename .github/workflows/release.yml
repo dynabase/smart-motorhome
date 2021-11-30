@@ -1,0 +1,30 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  release:
+    name: Prepare release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      # Build
+      - name: Build the file
+        working-directory: moto-card
+        run: |
+          npm install
+          npm run build
+
+      # Upload build file to the releas as an asset.
+      - name: Upload zip to release
+        working-directory: moto-card
+        uses: svenstaro/upload-release-action@v1-release
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: moto-card/dist/boilerplate-card.js
+          asset_name: boilerplate-card.js
+          tag: ${{ github.ref }}
+          overwrite: true

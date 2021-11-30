@@ -1,70 +1,27 @@
-2021-11-29 12:44:57 WARNING (MainThread) [homeassistant.components.http.ban] Login attempt or request with invalid authentication from localhost (::1). (Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36)
-2021-11-29 13:15:30 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:186:2321 Uncaught NotSupportedError: Failed to execute 'attachShadow' on 'Element': Shadow root cannot be created on a host which already hosts a shadow tree.
-2021-11-29 13:15:51 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:186:2321 Uncaught NotSupportedError: Failed to execute 'attachShadow' on 'Element': Shadow root cannot be created on a host which already hosts a shadow tree.
-2021-11-29 13:18:22 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:186:2321 Uncaught NotSupportedError: Failed to execute 'attachShadow' on 'Element': Shadow root cannot be created on a host which already hosts a shadow tree.
-2021-11-29 13:18:48 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:186:2320 Uncaught NotSupportedError: Failed to execute 'attachShadow' on 'Element': Shadow root cannot be created on a host which already hosts a shadow tree.
-2021-11-29 13:18:55 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:186:2320 Uncaught NotSupportedError: Failed to execute 'attachShadow' on 'Element': Shadow root cannot be created on a host which already hosts a shadow tree.
-2021-11-29 13:21:46 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:186:2320 Uncaught NotSupportedError: Failed to execute 'attachShadow' on 'Element': Shadow root cannot be created on a host which already hosts a shadow tree.
-2021-11-29 13:22:17 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:186:2320 Uncaught NotSupportedError: Failed to execute 'attachShadow' on 'Element': Shadow root cannot be created on a host which already hosts a shadow tree.
-2021-11-29 13:28:20 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:186:2335 Uncaught TypeError: Cannot read properties of undefined (reading 'domElement')
-2021-11-29 13:28:38 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:186:2335 Uncaught TypeError: Cannot read properties of undefined (reading 'domElement')
-2021-11-29 13:29:04 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:186:2345 Uncaught TypeError: Cannot read properties of undefined (reading 'domElement')
-2021-11-29 13:29:22 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:186:2345 Uncaught TypeError: Cannot read properties of undefined (reading 'domElement')
-2021-11-29 13:52:42 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:186:2898 Uncaught TypeError: Cannot read properties of undefined (reading 'log')
-2021-11-29 13:52:42 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:186:2898 Uncaught TypeError: Cannot read properties of undefined (reading 'log')
-2021-11-29 13:52:45 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:186:2898 Uncaught TypeError: Cannot read properties of undefined (reading 'log')
-2021-11-29 13:52:45 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:186:2898 Uncaught TypeError: Cannot read properties of undefined (reading 'log')
-2021-11-29 14:44:13 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:5506 Uncaught TypeError: Cannot read properties of undefined (reading 'domElement')
-2021-11-29 14:44:34 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:5506 Uncaught TypeError: Cannot read properties of undefined (reading 'domElement')
-2021-11-29 14:44:36 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:5506 Uncaught TypeError: Cannot read properties of undefined (reading 'domElement')
-2021-11-29 14:45:12 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:3691 Uncaught TypeError: Cannot read properties of undefined (reading 'rotation')
-2021-11-29 14:45:54 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:3691 Uncaught TypeError: Cannot read properties of undefined (reading 'rotation')
-2021-11-29 14:45:57 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:3691 Uncaught TypeError: Cannot read properties of undefined (reading 'rotation')
-2021-11-29 14:46:13 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:3691 Uncaught TypeError: Cannot read properties of undefined (reading 'rotation')
-2021-11-29 14:46:20 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:3691 Uncaught TypeError: Cannot read properties of undefined (reading 'rotation')
-2021-11-29 14:46:25 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:3691 Uncaught TypeError: Cannot read properties of undefined (reading 'rotation')
-2021-11-29 14:46:34 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:3691 Uncaught TypeError: Cannot read properties of undefined (reading 'rotation')
-2021-11-29 14:46:54 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:3691 Uncaught TypeError: Cannot read properties of undefined (reading 'rotation')
-2021-11-29 14:47:18 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:3691 Uncaught TypeError: Cannot read properties of undefined (reading 'rotation')
-2021-11-29 14:47:20 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:3691 Uncaught TypeError: Cannot read properties of undefined (reading 'rotation')
-2021-11-29 14:47:21 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:3691 Uncaught TypeError: Cannot read properties of undefined (reading 'rotation')
-2021-11-29 14:47:23 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:3691 Uncaught TypeError: Cannot read properties of undefined (reading 'rotation')
-2021-11-29 14:50:24 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:3691 Uncaught TypeError: Cannot read properties of undefined (reading 'rotation')
-2021-11-29 14:50:28 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:3691 Uncaught TypeError: Cannot read properties of undefined (reading 'rotation')
-2021-11-29 14:50:33 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:3691 Uncaught TypeError: Cannot read properties of undefined (reading 'rotation')
-2021-11-29 15:11:36 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6879 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:11:36 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6879 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:11:48 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6880 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:11:48 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6880 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:12:32 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6880 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:12:32 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6880 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:12:38 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6917 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:12:38 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6917 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:14:02 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6917 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:14:02 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6917 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:14:06 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6917 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:14:06 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6917 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:14:27 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6976 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:14:27 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6976 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:14:36 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6917 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:14:36 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6917 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:14:44 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6917 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:14:44 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6917 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:14:53 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6917 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:14:53 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6917 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:14:55 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6917 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:14:55 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6917 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:15:04 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6918 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:15:04 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6918 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:15:07 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6918 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:15:07 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6918 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:15:48 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6917 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:15:48 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6917 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:15:56 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6947 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:15:56 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6947 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:15:58 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6947 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:15:58 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6947 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:16:17 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6917 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:16:17 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6917 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:16:32 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6927 Uncaught TypeError: bc.aspect.set is not a function
-2021-11-29 15:16:32 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:189:6927 Uncaught TypeError: bc.aspect.set is not a function
+2021-11-30 14:31:42 ERROR (MainThread) [homeassistant.components.light] Platform demo does not generate unique IDs. ID light_1 already exists - ignoring light.bed_light
+2021-11-30 14:31:42 ERROR (MainThread) [homeassistant.components.light] Platform demo does not generate unique IDs. ID light_2 already exists - ignoring light.ceiling_lights
+2021-11-30 14:31:42 ERROR (MainThread) [homeassistant.components.light] Platform demo does not generate unique IDs. ID light_3 already exists - ignoring light.kitchen_lights
+2021-11-30 14:31:42 ERROR (MainThread) [homeassistant.components.light] Platform demo does not generate unique IDs. ID light_4 already exists - ignoring light.office_rgbw_lights
+2021-11-30 14:31:42 ERROR (MainThread) [homeassistant.components.light] Platform demo does not generate unique IDs. ID light_5 already exists - ignoring light.living_room_rgbww_lights
+2021-11-30 14:31:42 ERROR (MainThread) [homeassistant.components.light] Platform demo does not generate unique IDs. ID light_6 already exists - ignoring light.entrance_color_white_lights
+2021-11-30 14:35:13 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:190:4146 Uncaught TypeError: Cannot read properties of undefined (reading 'setSize')
+2021-11-30 14:35:13 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:190:4146 Uncaught TypeError: Cannot read properties of undefined (reading 'setSize')
+2021-11-30 14:35:17 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:190:4146 Uncaught TypeError: Cannot read properties of undefined (reading 'setSize')
+2021-11-30 14:35:17 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:190:4146 Uncaught TypeError: Cannot read properties of undefined (reading 'setSize')
+2021-11-30 14:36:06 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:190:4146 Uncaught TypeError: Cannot read properties of undefined (reading 'setSize')
+2021-11-30 14:36:06 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:190:4146 Uncaught TypeError: Cannot read properties of undefined (reading 'setSize')
+2021-11-30 14:36:09 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:190:4146 Uncaught TypeError: Cannot read properties of undefined (reading 'setSize')
+2021-11-30 14:36:09 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:190:4146 Uncaught TypeError: Cannot read properties of undefined (reading 'setSize')
+2021-11-30 14:36:20 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:190:4186 Uncaught TypeError: Cannot read properties of undefined (reading 'setSize')
+2021-11-30 14:36:20 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:190:4186 Uncaught TypeError: Cannot read properties of undefined (reading 'setSize')
+2021-11-30 14:42:35 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:190:3956 Uncaught TypeError: Cannot set properties of undefined (setting 'headlights')
+2021-11-30 14:43:08 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:190:3956 Uncaught TypeError: Cannot set properties of undefined (setting 'headlights')
+2021-11-30 14:44:56 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:190:1194 Uncaught TypeError: Cannot read properties of undefined (reading 'getObjectByName')
+2021-11-30 14:44:59 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:190:1194 Uncaught TypeError: Cannot read properties of undefined (reading 'getObjectByName')
+2021-11-30 14:48:57 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:190:1194 Uncaught TypeError: Cannot read properties of undefined (reading 'getObjectByName')
+2021-11-30 14:49:55 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:190:1097 Uncaught TypeError: Cannot read properties of undefined (reading 'getObjectByName')
+2021-11-30 14:50:55 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:190:1097 Uncaught TypeError: Cannot read properties of undefined (reading 'getObjectByName')
+2021-11-30 14:51:08 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:190:1097 Uncaught TypeError: Cannot read properties of undefined (reading 'getObjectByName')
+2021-11-30 14:52:17 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:190:1097 Uncaught TypeError: Cannot read properties of undefined (reading 'getObjectByName')
+2021-11-30 14:52:19 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:190:1097 Uncaught TypeError: Cannot read properties of undefined (reading 'getObjectByName')
+2021-11-30 14:52:24 ERROR (MainThread) [frontend.js.latest.202111090] http://127.0.0.1:5000/boilerplate-card.js:190:1097 Uncaught TypeError: Cannot read properties of undefined (reading 'getObjectByName')

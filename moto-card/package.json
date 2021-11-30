@@ -21,7 +21,8 @@
     "home-assistant-js-websocket": "^5.11.1",
     "lit": "^2.0.0-rc.2",
     "preact": "^10.6.1",
-    "three": "^0.135.0"
+    "three": "^0.135.0",
+    "three.interaction": "^0.2.3"
   },
   "devDependencies": {
     "@babel/core": "^7.15.0",

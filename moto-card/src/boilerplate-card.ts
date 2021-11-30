@@ -1,24 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  HomeAssistant,
-  hasConfigOrEntityChanged,
-  hasAction,
-  ActionHandlerEvent,
-  handleAction,
-  LovelaceCardEditor,
-  getLovelace,
-} from 'custom-card-helpers'; // This is a community maintained npm module with common helper functions/types. https://github.com/custom-cards/custom-card-helpers
+import { HomeAssistant, getLovelace } from 'custom-card-helpers'; // This is a community maintained npm module with common helper functions/types. https://github.com/custom-cards/custom-card-helpers
 
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-
-import './editor';
-
+import Interaction from 'three.interaction/src/interaction/Interaction';
+import { loadGLTFModel } from './lib/loadGLTFModel';
 import type { BoilerplateCardConfig } from './types';
 import { localize } from './localize/localize';
-
-const loader = new GLTFLoader();
 
 // This puts your card into the UI card picker dialog
 (window as any).customCards = (window as any).customCards || [];
@@ -29,62 +17,93 @@ const loader = new GLTFLoader();
 });
 
 let camera, scene, renderer, controls;
-let geometry, material, mesh;
 
 const animation = () => {
   controls.update();
   renderer.render(scene, camera);
 };
 
-const init = (parent: HTMLDivElement) => {
-  camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 100);
-  camera.position.z = 50;
+const toggleHeadlights = () => {
+  const importedScene = scene.getObjectByName('Scene');
+  const isVisible = importedScene.getObjectByName('leftHeadlight').visible;
+  importedScene.getObjectByName('leftHeadlight').visible = !isVisible;
+  importedScene.getObjectByName('rightHeadlight').visible = !isVisible;
+};
+
+const initHeadlights = () => {
+  const leftHeadlight = new THREE.SpotLight(0xffffff, 4, 0, Math.PI / 2, 1);
+  leftHeadlight.position.set(-2, 0.85, 0.55);
+  leftHeadlight.name = 'leftHeadlight';
+  scene.getObjectByName('Scene').add(leftHeadlight);
+
+  const rightHeadlight = new THREE.SpotLight(0xffffff, 4, 0, Math.PI / 2, 1);
+  rightHeadlight.position.set(-2, 0.85, -0.55);
+  rightHeadlight.name = 'rightHeadlight';
+  scene.getObjectByName('Scene').add(rightHeadlight);
+
+  const leftLight = scene.getObjectByName('Scene').getObjectByName('Group_145');
+  leftLight.cursor = 'pointer';
+
+  const rightLight = scene.getObjectByName('Scene').getObjectByName('Group_163');
+  rightLight.cursor = 'pointer';
+
+  leftLight.on('click', () => {
+    toggleHeadlights();
+  });
+  rightLight.on('click', () => {
+    toggleHeadlights();
+  });
+};
+
+const init = async (parent: HTMLDivElement) => {
+  camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000);
   scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xffffff);
-  // scene.fog = new THREE.Fog(0x72645b, 2, 15);
-
-  loader.load(
-    // resource URL
-    'http://127.0.0.1:5000/public/model.glb',
-    // called when resource is loaded
-    function (gltf) {
-      console.log(gltf);
-      scene.add(gltf.scene);
-    },
-    // called when loading is in progresses
-    function (xhr) {
-      console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
-    },
-    // called when loading has errors
-    function (error) {
-      console.log('An error happened', error);
-    },
-  );
-
-  const plane = new THREE.Mesh(
-    new THREE.PlaneGeometry(40, 40),
-    new THREE.MeshPhongMaterial({ color: 0x999999, specular: 0x101010 }),
-  );
-  plane.rotation.x = -Math.PI / 2;
-  plane.position.y = -0.5;
-  scene.add(plane);
-  plane.receiveShadow = true;
-
-  // scene.add(new THREE.HemisphereLight(0x443333, 0x111122));
-  const light = new THREE.AmbientLight(0x404040, 3);
-
+  scene.background = new THREE.Color(0x000000);
+  scene.castShadow = true;
+  // scene.fog = new THREE.Fog(0xeeeeee, 0, 1000);
+  console.log(scene);
+  const light = new THREE.AmbientLight(0x404040, 4); // soft white light
   scene.add(light);
-  // geometry = new THREE.BoxGeometry(0.2, 0.2, 0.2);
-  // material = new THREE.MeshNormalMaterial();
 
-  // mesh = new THREE.Mesh(geometry, material);
-  // scene.add(mesh);
+  // init camera position
+  camera.position.set(-1.9257630398868062, 1.9149436284603054, -2.9225354315979177);
+  camera.quaternion.set(-0.2586318915729673, 0.053585350956293056, 0.944430863104808, 0.1956744736530223);
 
-  renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.physicallyCorrectLights = true;
+
+  // init controls
   controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.minPolarAngle = Math.PI / 3;
+  controls.maxPolarAngle = Math.PI / 3;
+  controls.enableZoom = false;
+  controls.enablePan = false;
 
+  // start animation loop
   renderer.setAnimationLoop(animation);
   parent.appendChild(renderer.domElement);
+
+  new Interaction(renderer, scene, camera);
+
+  // load model
+  const gltf = await loadGLTFModel('http://127.0.0.1:5000/public/model.glb');
+  scene.add(gltf.scene);
+
+  // headlights
+  initHeadlights();
+
+  (window as any).debug = {
+    camera,
+    scene,
+    renderer,
+    controls,
+  };
+};
+
+type State = {
+  headlights: boolean;
 };
 
 customElements.define(
@@ -92,12 +111,12 @@ customElements.define(
   class extends HTMLElement {
     public config!: BoilerplateCardConfig;
     public content!: HTMLDivElement;
-    // public static async getConfigElement(): Promise<LovelaceCardEditor> {
-    //   return document.createElement('smart-motor-home-editor');
-    // }
+    public state: State = {
+      headlights: false,
+    };
 
     setConfig(config: BoilerplateCardConfig) {
-      console.log('config::::::', config, this.hass);
+      console.log('config::::::', config);
 
       if (!config) {
         throw new Error(localize('common.invalid_configuration'));
@@ -114,7 +133,16 @@ customElements.define(
     }
 
     set hass(hass: HomeAssistant) {
-      console.log('hass', hass, this.hass);
+      console.log('hass', hass);
+
+      // update local state by hass entity
+      if (this.config.headlight_entity) {
+        const state = hass.states[this.config.headlight_entity].state === 'on';
+        this.state.headlights = state;
+      }
+
+      console.log('local state', this.state);
+
       // Initialize the content if it's not there yet.
       if (!this.content) {
         this.innerHTML = `
@@ -130,11 +158,13 @@ customElements.define(
         }
       }
       // Update the content based on the latest hass object.
+      // ...
     }
 
+    // set webgl size on mount
     connectedCallback() {
       renderer.setSize(this.clientWidth, this.clientWidth);
-      camera.aspect = this.clientWidth / this.clientHeight;
+      camera.aspect = this.clientHeight / this.clientWidth;
     }
   },
 );
