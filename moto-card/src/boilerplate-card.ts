@@ -9,7 +9,6 @@ import type { BoilerplateCardConfig } from './types';
 import { localize } from './localize/localize';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 import model from './public/model.glb';
-console.log(model);
 
 // This puts your card into the UI card picker dialog
 (window as any).customCards = (window as any).customCards || [];
@@ -35,10 +34,18 @@ const update = (state: State) => {
     scene.getObjectByName('Scene').getObjectByName('leftHeadlight').visible = false;
     scene.getObjectByName('Scene').getObjectByName('rightHeadlight').visible = false;
   }
+
+  if (state.innerlights === true) {
+    scene.getObjectByName('Scene').getObjectByName('innerLight').visible = true;
+  }
+  if (state.innerlights === false) {
+    scene.getObjectByName('Scene').getObjectByName('innerLight').visible = false;
+  }
 };
 
 type State = {
   headlights: boolean;
+  innerlights: boolean;
 };
 
 customElements.define(
@@ -48,6 +55,7 @@ customElements.define(
     public content!: HTMLDivElement;
     public state: State = {
       headlights: false,
+      innerlights: false,
     };
     public _hass?: HomeAssistant = undefined;
     public initialized = false;
@@ -78,7 +86,11 @@ customElements.define(
         this.state.headlights = state;
       }
 
-      console.log('local state', this.state);
+      // update local state by hass entity
+      if (this.config.inner_lights_entity) {
+        const state = hass.states[this.config.inner_lights_entity].state === 'on';
+        this.state.innerlights = state;
+      }
 
       // Initialize the content if it's not there yet.
       if (!this.content) {
@@ -93,6 +105,7 @@ customElements.define(
         if (this.content) {
           this.init(this.content, () => {
             this.initialized = true;
+            update(this.state);
           });
         }
       }
@@ -107,7 +120,10 @@ customElements.define(
     // set webgl size on mount
     connectedCallback() {
       renderer.setSize(this.clientWidth, this.clientWidth);
-      camera.aspect = this.clientHeight / this.clientWidth;
+      setTimeout(() => {
+        camera.aspect = this.clientHeight / this.clientWidth;
+        camera.updateProjectionMatrix();
+      }, 100);
     }
 
     async init(parent: HTMLDivElement, callback: () => void) {
@@ -149,6 +165,7 @@ customElements.define(
 
       // headlights
       this.initHeadlights();
+      this.initInnerLights();
 
       (window as any).debug = {
         camera,
@@ -181,6 +198,18 @@ customElements.define(
       rightLight.on('click', this.toggleHeadlights.bind(this));
     }
 
+    initInnerLights() {
+      const innerLight = new THREE.SpotLight(0x0000ff, 4, 10, Math.PI / 2, 1);
+      innerLight.position.set(-0.05, 1.5, -0.04);
+      innerLight.name = 'innerLight';
+      scene.getObjectByName('Scene').add(innerLight);
+
+      const lamp = scene.getObjectByName('Scene').getObjectByName('InnerLamp');
+      lamp.cursor = 'pointer';
+
+      lamp.on('click', this.toggleInnerLight.bind(this));
+    }
+
     toggleHeadlights() {
       const importedScene = scene.getObjectByName('Scene');
       const oldVisibilityState = importedScene.getObjectByName('leftHeadlight').visible;
@@ -193,6 +222,21 @@ customElements.define(
       } else {
         this._hass?.callService('homeassistant', 'turn_off', {
           entity_id: this.config.headlight_entity,
+        });
+      }
+    }
+
+    toggleInnerLight() {
+      const importedScene = scene.getObjectByName('Scene');
+      const oldVisibilityState = importedScene.getObjectByName('innerLight').visible;
+      importedScene.getObjectByName('innerLight').visible = !oldVisibilityState;
+      if (!oldVisibilityState === true) {
+        this._hass?.callService('homeassistant', 'turn_on', {
+          entity_id: this.config.inner_lights_entity,
+        });
+      } else {
+        this._hass?.callService('homeassistant', 'turn_off', {
+          entity_id: this.config.inner_lights_entity,
         });
       }
     }
