@@ -6,11 +6,14 @@ declare global {
   }
 }
 
+export interface VanCardConfig extends BoilerplateCardConfig {
+  headlight_entity?: string;
+  inner_lights_entity?: string;
+}
+
 // TODO Add your configuration elements here for type-checking
 export interface BoilerplateCardConfig extends LovelaceCardConfig {
   type: string;
-  headlight_entity?: string;
-  inner_lights_entity?: string;
   name?: string;
   show_warning?: boolean;
   show_error?: boolean;

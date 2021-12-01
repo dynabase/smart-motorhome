@@ -5,7 +5,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import Interaction from 'three.interaction/src/interaction/Interaction';
 import { loadGLTFModel } from './lib/loadGLTFModel';
-import type { BoilerplateCardConfig } from './types';
+import type { VanCardConfig } from './types';
 import { localize } from './localize/localize';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 import model from './public/model.glb';
@@ -41,7 +41,7 @@ type VanState = {
 customElements.define(
   'smart-motor-home',
   class extends HTMLElement {
-    public config!: BoilerplateCardConfig;
+    public config!: VanCardConfig;
     public content!: HTMLDivElement;
     public state: VanState = {
       headlights: false,
@@ -50,7 +50,7 @@ customElements.define(
     public _hass?: HomeAssistant = undefined;
     public initialized = false;
 
-    setConfig(config: BoilerplateCardConfig) {
+    setConfig(config: VanCardConfig) {
       console.log('config::::::', config);
 
       if (!config) {
