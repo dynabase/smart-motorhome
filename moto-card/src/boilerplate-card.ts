@@ -9,6 +9,7 @@ import type { BoilerplateCardConfig } from './types';
 import { localize } from './localize/localize';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 import model from './public/model.glb';
+import { HassEntities, HassEntity } from 'home-assistant-js-websocket';
 
 // This puts your card into the UI card picker dialog
 (window as any).customCards = (window as any).customCards || [];
@@ -25,25 +26,14 @@ const animation = () => {
   renderer.render(scene, camera);
 };
 
-const update = (state: State) => {
-  if (state.headlights === true) {
-    scene.getObjectByName('Scene').getObjectByName('leftHeadlight').visible = true;
-    scene.getObjectByName('Scene').getObjectByName('rightHeadlight').visible = true;
-  }
-  if (state.headlights === false) {
-    scene.getObjectByName('Scene').getObjectByName('leftHeadlight').visible = false;
-    scene.getObjectByName('Scene').getObjectByName('rightHeadlight').visible = false;
-  }
+const update = (state: VanState) => {
+  scene.getObjectByName('Scene').getObjectByName('leftHeadlight').visible = state.headlights === true;
+  scene.getObjectByName('Scene').getObjectByName('rightHeadlight').visible = state.headlights === true;
 
-  if (state.innerlights === true) {
-    scene.getObjectByName('Scene').getObjectByName('innerLight').visible = true;
-  }
-  if (state.innerlights === false) {
-    scene.getObjectByName('Scene').getObjectByName('innerLight').visible = false;
-  }
+  scene.getObjectByName('Scene').getObjectByName('innerLight').visible = state.innerlights === true;
 };
 
-type State = {
+type VanState = {
   headlights: boolean;
   innerlights: boolean;
 };
@@ -53,7 +43,7 @@ customElements.define(
   class extends HTMLElement {
     public config!: BoilerplateCardConfig;
     public content!: HTMLDivElement;
-    public state: State = {
+    public state: VanState = {
       headlights: false,
       innerlights: false,
     };
@@ -77,20 +67,17 @@ customElements.define(
       };
     }
 
+    private getEntityState(states: HassEntities, entityName: string | undefined): HassEntity | undefined {
+      if (!entityName) return undefined;
+
+      return states[entityName];
+    }
+
     set hass(hass: HomeAssistant) {
       this._hass = hass;
 
-      // update local state by hass entity
-      if (this.config.headlight_entity) {
-        const state = hass.states[this.config.headlight_entity].state === 'on';
-        this.state.headlights = state;
-      }
-
-      // update local state by hass entity
-      if (this.config.inner_lights_entity) {
-        const state = hass.states[this.config.inner_lights_entity].state === 'on';
-        this.state.innerlights = state;
-      }
+      this.state.headlights = this.getEntityState(hass.states, this.config.headlight_entity)?.state === 'on';
+      this.state.innerlights = this.getEntityState(hass.states, this.config.inner_lights_entity)?.state === 'on';
 
       // Initialize the content if it's not there yet.
       if (!this.content) {
@@ -212,33 +199,25 @@ customElements.define(
 
     toggleHeadlights() {
       const importedScene = scene.getObjectByName('Scene');
-      const oldVisibilityState = importedScene.getObjectByName('leftHeadlight').visible;
+      const oldVisibilityState: boolean | undefined = importedScene.getObjectByName('leftHeadlight').visible;
+
       importedScene.getObjectByName('leftHeadlight').visible = !oldVisibilityState;
       importedScene.getObjectByName('rightHeadlight').visible = !oldVisibilityState;
-      if (!oldVisibilityState === true) {
-        this._hass?.callService('homeassistant', 'turn_on', {
-          entity_id: this.config.headlight_entity,
-        });
-      } else {
-        this._hass?.callService('homeassistant', 'turn_off', {
-          entity_id: this.config.headlight_entity,
-        });
-      }
+
+      this._hass?.callService('homeassistant', oldVisibilityState === true ? 'turn_off' : 'turn_on', {
+        entity_id: this.config.headlight_entity,
+      });
     }
 
     toggleInnerLight() {
       const importedScene = scene.getObjectByName('Scene');
-      const oldVisibilityState = importedScene.getObjectByName('innerLight').visible;
+      const oldVisibilityState: boolean | undefined = importedScene.getObjectByName('innerLight').visible;
+
       importedScene.getObjectByName('innerLight').visible = !oldVisibilityState;
-      if (!oldVisibilityState === true) {
-        this._hass?.callService('homeassistant', 'turn_on', {
-          entity_id: this.config.inner_lights_entity,
-        });
-      } else {
-        this._hass?.callService('homeassistant', 'turn_off', {
-          entity_id: this.config.inner_lights_entity,
-        });
-      }
+
+      this._hass?.callService('homeassistant', oldVisibilityState === true ? 'turn_off' : 'turn_on', {
+        entity_id: this.config.inner_lights_entity,
+      });
     }
   },
 );
