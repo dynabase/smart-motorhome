@@ -62,8 +62,8 @@ customElements.define(
       }
 
       this.config = {
-        name: 'Smart Motor Home',
         ...config,
+        name: 'Smart Motor Home',
       };
     }
 
